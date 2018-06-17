@@ -1,14 +1,14 @@
 import matplotlib.pyplot as plt
-from random import choice
 
 
 class GraphComposer:
 
-    def __init__(self):
+    def __init__(self, checkVar):
         self.fig, self.ax1 = plt.subplots()
         self.lineStyles = ["-", "--", "-.", ":"]
-        self.usedLineStyles1 = []
-        self.usedLineStyles2 = []
+        self.checkVar = checkVar
+        self.numberOfLines1 = int(0)
+        self.numberOfLines2 = int(0)
 
     def text(self, titl, xText, y1Text, y2Text):
         self.titl = titl
@@ -25,40 +25,38 @@ class GraphComposer:
         color = "blue"
         self.ax2.set_ylabel(self.y2Text + " [" + y2Units + "]", color=color)
 
-    def addY1Data(self, y1Data, timeArray, nameOfFile):
-        while 1:
-            currentLineStyle = choice(self.lineStyles)
-            if(len(self.usedLineStyles1)>0):
-                if (currentLineStyle in self.usedLineStyles1):
-                    continue
-                else:
-                    break
-                    self.usedLineStyles1.append(currentLineStyle)
-            else:
-                break
-                self.usedLineStyles1.append(currentLineStyle)
+    def addY1Data(self, y1Data, timeArray, pathToFile):
+        if (self.checkVar == 1):
+            self.numberOfLines1 += 1
+            currentLineStyle = self.lineStyles[self.numberOfLines1 - 1]
+            if(self.numberOfLines1 == 4):
+                self.numberOfLines1 = 0
+        else:
+            currentLineStyle=self.lineStyles[0]
 
         color = "red"
-        self.ax1.plot(timeArray, y1Data, label=nameOfFile, color=color, linestyle = currentLineStyle)
+        pathArray = pathToFile.split("/")
+        nameOfFile = "Source: " + pathArray[len(pathArray)-1]
+        self.ax1.plot(timeArray, y1Data, label=nameOfFile, color=color, linestyle=currentLineStyle)
         self.ax1.tick_params(axis='y', labelcolor=color)
 
-    def addY2Data(self, y2Data, timeArray, nameOfFile):
-        while 1:
-            currentLineStyle = choice(self.lineStyles)
-            if (len(self.usedLineStyles2) > 0):
-                if (currentLineStyle in self.usedLineStyles2):
-                    continue
-                else:
-                    break
-                    self.usedLineStyles2.append(currentLineStyle)
-            else:
-                break
-                self.usedLineStyles2.append(currentLineStyle)
-        currentLineStyle = choice(self.lineStyles)
+    def addY2Data(self, y2Data, timeArray, pathToFile):
+        if (self.checkVar == 1):
+            self.numberOfLines2 += 1
+            currentLineStyle = self.lineStyles[self.numberOfLines2 - 1]
+            if (self.numberOfLines2 == 4):
+                self.numberOfLines2 = 0
+        else:
+            currentLineStyle=self.lineStyles[0]
+
         color = "blue"
-        self.ax2.plot(timeArray, y2Data, label=nameOfFile, color=color, linestyle = currentLineStyle)
+        pathArray = pathToFile.split("/")
+        nameOfFile = "Source: " + pathArray[len(pathArray) - 1]
+        self.ax2.plot(timeArray, y2Data, label=nameOfFile, color=color, linestyle=currentLineStyle)
         self.ax2.tick_params(axis='y', labelcolor=color)
 
     def plotData(self):
         self.fig.tight_layout()
+        self.ax1.legend(loc="upper left")
+        self.ax2.legend(loc="upper right")
         plt.show()
