@@ -10,6 +10,11 @@ Two_Y_Axes is software for plotting measured data exported from scholl experimen
 <li>(Reminder:)Matplotlib is also required. File "requirements.txt" is included for easy installation using pip. (Open console -> 
 navigate to folder where you cloned or downloaded repository -> type: "pip install -r requirements.txt" -> hit Enter key -> wait until installation is completed.)
 </li>
+</ol>
+<br>
+<h2>Operating the program</h2>
+<br>
+<ol>
 <li>Run script "GUI.py" (Open console -> navigate to folder where you cloned or downloaded the repository -> type: "GUI.py"</li>
 <li>Now the window should appear</li>
 <li>Click the button right next to Y1 entryBox with "..." on it</li>
